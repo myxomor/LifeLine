@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+@font-face {
+    font-family: "MyriadProRegular";
+    src: url("./MyriadProRegular/MyriadProRegular.eot");
+    src: url("./MyriadProRegular/MyriadProRegular.eot?#iefix")format("embedded-opentype"),
+    url("./MyriadProRegular/MyriadProRegular.woff") format("woff"),
+    url("./MyriadProRegular/MyriadProRegular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+body{
+    margin:0;
+}
+.navBtn{
+    background-image: url("navBtn.svg");
+    width: 40px;
+    height: 34px;
+    margin-top: 35px;
+    margin-left: 31px;
+}
+.profile{
+    background-image: url("bgProfile.jpg");
+    background-size: cover;
+    background-position: bottom center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+.header{
+    background-color: #a1568b;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.title{
+    margin-top: 40px;
+    margin-left: 40%;
+    font-family: MyriadProRegular;
+    font-size: 16pt;
+    color: white;
+}
+.upper {
+    background-color: #a1568b;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.avatar{
+    height: 180px;
+    border-radius: 180px;
+    margin-top: 30px;
+}
+.person{
+    margin-top: 26px;
+    font-family: MyriadProRegular;
+    font-size: 16pt;
+    color: #ffffff;
+}
+.status{
+    margin-top: 20px;
+    margin-bottom: 32px;
+    color: white;
+    font-family: MyriadProRegular;
+    font-size: 14pt;
+    text-align: center;
+}
+.info{
+    font-family: MyriadProRegular;
+    width: 100%;
+}

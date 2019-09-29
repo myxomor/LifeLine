@@ -1,0 +1,36 @@
+{
+  "name": "lifeline",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.jsx",
+  "homepage": "https://github.com/myxomor/LifeLine.git",
+  "scripts": {
+    "start": "cross-env PORT=10888 react-scripts start",
+    "build": "react-scripts build",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/runtime": "^7.6.0",
+    "ajv": "^6.10.2",
+    "cross-env": "^5.2.0",
+    "gh-pages": "^2.0.1",
+    "react-hot-loader": "^4.3.12",
+    "react-scripts": "^1.1.5"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.4.3",
+    "@vkontakte/icons": "^1.2.1",
+    "@vkontakte/vk-connect": "^1.5.6",
+    "@vkontakte/vkui": "^2.13.0",
+    "@vkontakte/vkui-connect": "^1.1.2",
+    "core-js": "^2.5.7",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1",
+    "react-router": "^5.1.0"
+  }
+}
