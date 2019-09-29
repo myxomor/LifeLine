@@ -4,69 +4,61 @@ import "./index.css";
 import SwipeableTemporaryDrawer from "./components/temp";
 import axios from 'axios';
 
-import List from "./components/list";
+import GoalList from "./components/list";
 
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {person: {}};
+        this.state = {
+            person: {},
+            aInfo: [],
+            personInfo: {}
+        };
     }
-    requestBtn () {
-        let socket = new WebSocket("ws://83.166.252.73");
-        socket.onopen = function(e) {
-            console.log("[open] Соединение установлено");
-            console.log("Отправляем данные на сервер");
-            socket.send("Меня зовут Джон");
-        };
 
-        socket.onmessage = function(event) {
-            console.log(`[message] Данные получены с сервера: ${event.data}`);
-        };
-
-        socket.onclose = function(event) {
-            if (event.wasClean) {
-                console.log(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
-            } else {
-                // например, сервер убил процесс или сеть недоступна
-                // обычно в этом случае event.code 1006
-                console.log('[close] Соединение прервано');
-            }
-        };
-
-        socket.onerror = function(error) {
-            console.log(`[error] ${error.message}`);
-        };
-        //socket.close(1000, "работа закончена");
-        /* axios({
-             method: 'get',
-             timeout: 10000,
-             url: 'http://83.166.252.73',
-             responseType: 'arraybuffer',
-             params: {
-                 ID: 12345
-             }
-         })
-             .then(function (response) {
-
-                 console.log(response);
-                 console.log('response');
-             })
-             .catch(function (error) {
-                 // handle error
-                 console.log(error);
-                 console.log(error.data);
-                 console.log('error');
-             })*/
-//        axios.delete("http://83.166.252.73")
-
-
-    }
     componentDidMount() {
         connect.subscribe((e) => {
+            console.log(e);
             if (e.detail.type == "VKWebAppGetUserInfoResult") {
                 this.setState({
                     person: e.detail.data
                 });
+            };
+            if (e.detail.type == "VKWebAppStorageGetFailed") {
+                console.log("creating new storage");
+                let dateNow = new Date();
+                let sDateNow = dateNow.getDate() + "." + dateNow.getMonth() + "." + dateNow.getFullYear();
+                let personInfo = {
+                    succeed: 0,
+                    snoozed: 0,
+                    overdue: 0,
+                    goals : [
+                        {
+                            header: "Создать первую цель",
+                            date: sDateNow,
+                            ok: false
+                        }
+                    ],
+                };
+                let sPersonInfo = JSON.stringify(personInfo);
+                console.log(sPersonInfo);
+                connect.send("VKWebAppStorageSet", {
+                    "key": "goals",
+                    "value": sPersonInfo,
+                });
+                this.setState({
+                    personInfo: personInfo,
+                })
+            }
+            if (e.detail.type == "VKWebAppStorageGetResult") {
+                console.log("loading storage");
+                this.setState({
+                    aInfo: e.detail.data.keys
+                });
+                let aInfo = this.state.aInfo;
+                this.setState({
+                    personInfo: JSON.parse(this.state.aInfo[0].value)
+                })
             }
         });
 
@@ -74,6 +66,8 @@ class App extends React.Component {
         connect.send('VKWebAppInit', {});
 
         connect.send("VKWebAppGetUserInfo", {});
+
+        connect.send("VKWebAppStorageGet", {"keys": ["goals"], "global": false});
 
 
     }
@@ -90,6 +84,7 @@ class App extends React.Component {
                     <div className="status">Отлично! Вы завершили на 6% больше задач в этом месяце.</div>
                 </div>
                 <div className="info">
+
                 </div>
             </div>
 
